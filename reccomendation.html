@@ -45,20 +45,27 @@
 </head>
 
 <body>
-    <h1 class = "mainHeading">Main Heading</h1>
+    <h1 class = "mainHeading">Reccomend a song!</h1>
     <p class="paragraph1">Input a Song Link</p>
     <div class="container">
         <h2>Subheading</h2>
         <p class="paragraph2">This is paragraph 2</p>
+        <div text-align="center">
+            <input type="text" id="songLink" placeholder="Enter Song Link">
+            <button onclick="recommendSong()">Recommend Song</button>
+        </div>
         <p class="paragraph3">This is paragraph 3</p>
     </div>
     <div class="box">
         <p>Box content</p>
+    
+    <select name="playlist" id="playlist">
+        <option value="playlist1">Playlist1</option>
+        <option value="playlist2">Playlist2</option>
+        <option value="playlist3">Playlist3</option>
+        <option value="playlist4">Playlist4</option>
+    </select>
     </div> <button class="btn">Click Me</button>
-    <div text-align="center">
-        <input type="text" id="songLink" placeholder="Enter Song Link">
-        <button onclick="recommendSong()">Recommend Song</button>
-    </div>
 </body>
 
 </html>
