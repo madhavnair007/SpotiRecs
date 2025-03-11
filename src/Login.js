@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
@@ -14,6 +14,13 @@ function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem("loggedInUser");
+    if (storedUser) {
+      navigate("/recommendation");
+    }
+  }, [navigate]);
+
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -23,6 +30,7 @@ function Login() {
 
     if (validUser) {
       setError("");
+      localStorage.setItem("loggedInUser", username);
       navigate("/recommendation");
     } else {
       setError("Invalid username or password");
