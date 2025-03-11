@@ -18,17 +18,17 @@ function Recommendation() {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        const loggedInUser = localStorage.getItem("loggedInUser");
-        if (!loggedInUser) {
-            navigate("/login");
-        }
-    }, [navigate]);
+    // useEffect(() => {
+    //     const loggedInUser = localStorage.getItem("loggedInUser");
+    //     if (!loggedInUser) {
+    //         navigate("/login");
+    //     }
+    // }, [navigate]);
 
-    const handleLogout = () => {
-        localStorage.removeItem("loggedInUser");
-        navigate("/login");
-    };
+    // const handleLogout = () => {
+    //     localStorage.removeItem("loggedInUser");
+    //     navigate("/login");
+    // };
 
     const getStyle = () => {
         if (status === 'yes') {
