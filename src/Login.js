@@ -1,25 +1,60 @@
-import './Login.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
+
+const users = [
+  { username: "madhav", password: "123" },
+  { username: "bhuvan", password: "456" },
+  { username: "brianna", password: "789" }
+];
 
 function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const validUser = users.find(
+      (user) => user.username === username && user.password === password
+    );
+
+    if (validUser) {
+      setError("");
+      navigate("/recommendation");
+    } else {
+      setError("Invalid username or password");
+    }
+  };
+
   return (
-    <body>
-      <div class="glass-container">
-        <div class="login-box">
+    <div className="login-container">
+      <div className="glass-container">
+        <div className="login-box">
           <h2>Login</h2>
-          <form action="#" method="POST">
-            <input type="text" id="username" name="username" required placeholder="Email or Username" />
-            <input type="password" id="password" name="password" required placeholder="Password" />
-            <div class="options">
-              <input type="checkbox" id="remember" name="remember" />
-              <label for="remember">Remember me</label>
-              <a href="#">Forgot Password?</a>
-            </div>
+          <form onSubmit={handleLogin}>
+            <input
+              type="text"
+              placeholder="Email or Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            {error && <p style={{ color: "red", marginTop: "5px" }}>{error}</p>}
             <button type="submit">Login</button>
-            <p>Don't have an account? <a href="#" id="register">Register</a></p>
           </form>
         </div>
       </div>
-    </body>
+    </div>
   );
 }
 
