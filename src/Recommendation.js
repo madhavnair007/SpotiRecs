@@ -3,9 +3,10 @@ import './Recommendation.css';
 function Recommendation() {
     return (
         <body>
-
+        <div>
+            <header>
             <h1 class="mainHeading">Recommend a song!</h1>
-
+            </header>
             <div class="container">
                 <h2>Input a Song Link</h2>
                 <div text-align="center">
@@ -24,6 +25,9 @@ function Recommendation() {
 
 
             <button class="btn">Run</button>
+        </div>
+
+            
 
         </body>
     );
