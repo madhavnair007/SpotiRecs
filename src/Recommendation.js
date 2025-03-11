@@ -7,9 +7,10 @@ function Recommendation() {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
+        //simulated backend
         const fetchData = async () => {
           const data = await new Promise((resolve) => {
-            setTimeout(() => resolve('no'), 1000);
+            setTimeout(() => resolve('yes'), 1000);
           });
           setStatus(data);
         };
@@ -23,11 +24,11 @@ function Recommendation() {
         } else if (status === 'no') {
           return { backgroundColor: 'red', color: 'white', padding: '10px', borderRadius: '5px' };
         }
-        return { backgroundColor: 'gray', color: 'white', padding: '10px', borderRadius: '5px' };  // Default if data is loading or null
+        return { backgroundColor: 'gray', color: 'white', padding: '10px', borderRadius: '5px' };
       };
 
       const handleClick = () => {
-        setIsVisible(true); // When the button is clicked, set the visibility to true
+        setIsVisible(true);
       };
 
     return (
@@ -43,7 +44,7 @@ function Recommendation() {
             </div>
 
             <div className="box">
-                <p>Select a Playlist</p>
+                <h2>Select a Playlist!</h2>
                 <select name="playlist" id="playlist">
                     <option value="playlist1">Playlist1</option>
                     <option value="playlist2">Playlist2</option>
