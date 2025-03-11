@@ -1,20 +1,48 @@
 import './Recommendation.css';
 
+import { useState, useEffect } from 'react';
+
 function Recommendation() {
+    const [status, setStatus] = useState(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+          const data = await new Promise((resolve) => {
+            setTimeout(() => resolve('no'), 1000);
+          });
+          setStatus(data);
+        };
+    
+        fetchData();
+      }, []);
+
+      const getStyle = () => {
+        if (status === 'yes') {
+          return { backgroundColor: 'green', color: 'white', padding: '10px', borderRadius: '5px' };
+        } else if (status === 'no') {
+          return { backgroundColor: 'red', color: 'white', padding: '10px', borderRadius: '5px' };
+        }
+        return { backgroundColor: 'gray', color: 'white', padding: '10px', borderRadius: '5px' };  // Default if data is loading or null
+      };
+
+      const handleClick = () => {
+        setIsVisible(true); // When the button is clicked, set the visibility to true
+      };
+
     return (
-        <body>
-        <div>
+        <div className="recommendation-container">
             <header>
-            <h1 class="mainHeading">Recommend a song!</h1>
+                <h1 className="mainHeading">Recommend a song!</h1>
             </header>
-            <div class="container">
+            <div className="container">
                 <h2>Input a Song Link</h2>
-                <div text-align="center">
+                <div style={{ textAlign: 'center' }}>
                     <input type="text" id="songLink" placeholder="Enter Song Link" />
                 </div>
             </div>
 
-            <div class="box">
+            <div className="box">
                 <p>Select a Playlist</p>
                 <select name="playlist" id="playlist">
                     <option value="playlist1">Playlist1</option>
@@ -23,13 +51,19 @@ function Recommendation() {
                 </select>
             </div>
 
+            <button className="btn" onClick={handleClick}>Run</button>
 
-            <button class="btn">Run</button>
+            {isVisible && (
+                <div className="container">
+                    <div style={{ textAlign: 'center' }}>
+                        <div style={getStyle()}>
+                            {status === 'yes' ? "We recommend this song!" :
+                            status === 'no' ? "We don't recommend this song." : 'Loading...'}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
-
-            
-
-        </body>
     );
 }
 
