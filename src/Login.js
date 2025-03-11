@@ -12,10 +12,10 @@ function Login() {
             <div class="options">
               <input type="checkbox" id="remember" name="remember" />
               <label for="remember">Remember me</label>
-              <button type="button" class="link-button">Forgot Password?</button>
+              <a href="#">Forgot Password?</a>
             </div>
             <button type="submit">Login</button>
-            <p>Don't have an account? <button id="register" class="link-button">Register</button></p>
+            <p>Don't have an account? <a href="#" id="register">Register</a></p>
           </form>
         </div>
       </div>
