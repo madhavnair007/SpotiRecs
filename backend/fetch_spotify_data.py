@@ -6,7 +6,7 @@ import requests
 
 SPOTIFY_CLIENT_ID = "3dc27a5db2f44f0ebaf996c15ea04b1e"
 SPOTIFY_CLIENT_SECRET = "19eec47a6d13467da89b521612b0259f"
-SPOTIFY_REDIRECT_URI = "http://localhost:5000/callback"
+SPOTIFY_REDIRECT_URI = "http://localhost:3000/recommendation"
 SCOPE = "user-library-read playlist-read-private user-read-private user-read-playback-state user-read-currently-playing user-read-recently-played user-top-read"
 USERNAME = "ze4op3dkz3gqbcc4nluk9fyvc"
 
@@ -25,12 +25,19 @@ def get_user_playlists():
     playlists = sp.current_user_playlists()
     playlist_data = []
     
-    for playlist in playlists['items']:
-        playlist_data.append({
+    # for playlist in playlists['items']:
+    #     playlist_data.append({
+    #         "playlist_name": playlist['name'],
+    #         "playlist_id": playlist['id'],
+    #         "total_tracks": playlist['tracks']['total']
+    #     })
+
+    playlist = playlists['items'][0]
+    playlist_data.append({
             "playlist_name": playlist['name'],
             "playlist_id": playlist['id'],
             "total_tracks": playlist['tracks']['total']
-        })
+    })
 
     return playlist_data
 
@@ -41,13 +48,17 @@ def get_playlist_tracks(playlist_id):
     
     for item in results['items']:
         track = item['track']
-        track_data = {
+        if track is not None and "id" in track:
+            track_data = {
             "id": track["id"],
             "name": track["name"],
             "artist": track["artists"][0]["name"],
             "playlist_id": playlist_id,
             "features": get_audio_features(track["id"])
         }
+        else:
+            print(f"Skipping track: {track}")  # Debugging output
+            continue
         tracks.append(track_data)
     
     return tracks
@@ -103,7 +114,7 @@ def save_data_to_dataframe():
 
     auth_manager.cache_handler.clear()
     sp.auth_manager.cache_handler.clear()
-    save_data_to_dataframe()
+    # save_data_to_dataframe()
 
 
 if __name__ == "__main__":
