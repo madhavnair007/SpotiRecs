@@ -1,19 +1,17 @@
-import './Recommendation.css';
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from 'react';
+import './Recommendation.css';import { useState } from 'react';
 
 function Recommendation() {
     const [isVisible, setIsVisible] = useState(false);
-    const [recommendation, setRecommendation] = useState('');
+    const [recommendation, setRecommendation] = useState([]);
     const [inputValue, setInputValue] = useState('');
 
     const handleClick = () => {
-        if (inputValue.trim === '') {
-            setRecommendation(['Enter a song link.']);
+        if (inputValue.trim() === '') {
+            setRecommendation(['Please enter a song link.']);
         } else {
-          setRecommendation(["Song 1", "Song 2", "Song 3"]);  
+            setRecommendation(["Song 1", "Song 2", "Song 3"]);
         }
-        setIsVisible(true);  
+        setIsVisible(true);
     };
 
     return (
