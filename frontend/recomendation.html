@@ -13,19 +13,39 @@
         <h2>Input a Song Link</h2>
         <div text-align="center">
             <input type="text" id="songLink" placeholder="Enter Song Link">
+            <button class="btn" onClick="recommendSong()">Run</button>
         </div>
     </div>
-
-    <div class="box">
-        <p>Select a Playlist</p>
-    <select name="playlist" id="playlist">
-        <option value="playlist1">Playlist1</option>
-        <option value="playlist2">Playlist2</option>
-        <option value="playlist3">Playlist3</option>
-    </select>
-    </div>
     
-    <button class="btn">Run</button>
+    <div class="box" id="outputBox" style="display:none;">
+        <p>Recommended Songs:</p>
+        <ul id="recommendationResult"></ul>
+    </div>
+
+    <script>
+        function recommendSong() {
+            const song = document.getElementById("songLink").value.trim();
+            const outputBox = document.getElementById("outputBox");
+            const recommendationList = document.getElementById("recommendationResult");
+
+            recommendationList.innerHTML = "";
+
+            outputBox.style.display = "block";
+
+            if (song === "") {
+                recommendationList.innerHTML = "<li>Please enter a song link.</li>";
+                return;
+            }
+
+            const recommendations = ["Song 1", "Song 2", "Song 3"];
+
+            recommendations.forEach(rec => {
+                const li = document.createElement("li");
+                li.textContent = rec;
+                recommendationList.appendChild(li);
+            });
+        }
+    </script>
 </body>
 
 </html>
