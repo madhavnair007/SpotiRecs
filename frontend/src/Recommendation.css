@@ -4,18 +4,15 @@
     background-color: #121212;
     color: #FFFFFF;
     text-align: center;
+    min-height: 100vh;
+    padding: 20px;
 }
 
 .mainHeading {
     color: #1DB954;
     font-size: 32px;
     font-weight: bold;
-    margin-top: 0px;
-    display: flex;
-    align-items: center;
-    height: 100px;
-    top: 0;
-    width: 100%;
+    margin-top: 20px;
 }
 
 .container,
@@ -24,17 +21,17 @@
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     padding: 25px;
-    margin: 3px;
-    width: 100%;
+    margin: 20px auto;
+    max-width: 500px; 
+    width: 90%;       
 }
 
-.recommendation-container input[type="text"],
-.recommendation-container select {
+.recommendation-container input[type="text"] {
     width: 80%;
     padding: 12px;
-    margin: 40px 0;
+    margin-top: 20px;
     border: 1px solid #1DB954;
-    border-radius: 10px;
+    border-radius: 25px;
     background-color: #282828;
     color: #FFFFFF;
     font-size: 16px;
@@ -51,7 +48,7 @@
     font-size: 18px;
     font-weight: bold;
     transition: background 0.3s;
-    margin: 20px;
+    margin-top: 20px;
 }
 
 .btn:hover {
@@ -61,4 +58,20 @@
 p {
     color: #B3B3B3;
     font-size: 18px;
+}
+
+.recommendation-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.recommendation-list li {
+    background-color: #282828;
+    color: #FFFFFF;
+    font-size: 16px;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 10px;
+    width: 80%;
 }
