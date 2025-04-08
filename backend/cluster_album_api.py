@@ -40,13 +40,15 @@ def api_build_album():
     data = request.json
     song_indices = data.get('song_indices', [])
     num_songs = data.get('num_songs', 10)
+    exclude_input_songs = data.get('exclude_input_songs', False)
+    artist_filter = data.get('artist_filter', 'all')
     
     if len(song_indices) != 3:
         return jsonify({'error': 'Exactly 3 song indices are required'}), 400
     
     try:
         # Build the album
-        album_indices = build_album_from_songs(song_indices, num_songs)
+        album_indices = build_album_from_songs(song_indices, num_songs, exclude_input_songs, artist_filter)
         album_details = get_album_details(album_indices)
         
         # Convert to list of dictionaries for JSON response

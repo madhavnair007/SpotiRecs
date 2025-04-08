@@ -2,38 +2,50 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-const users = [
-  { username: "madhav", password: "123" },
-  { username: "bhuvan", password: "456" },
-  { username: "brianna", password: "789" }
-];
-
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const storedUser = localStorage.getItem("loggedInUser");
-  //   if (storedUser) {
-  //     navigate("/recommendation");
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    // Check if user is already authenticated
+    fetch('http://localhost:5002/check-auth', {
+      credentials: 'include'
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.authenticated) {
+          navigate("/cluster_album");
+        }
+      })
+      .catch(error => console.error('Error checking auth:', error));
+  }, [navigate]);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
 
-    const validUser = users.find(
-      (user) => user.username === username && user.password === password
-    );
+    try {
+      const response = await fetch('http://localhost:5002/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ username, password })
+      });
 
-    if (validUser) {
-      setError("");
-      // localStorage.setItem("loggedInUser", username);
-      navigate("/recommendation");
-    } else {
-      setError("Invalid username or password");
+      const data = await response.json();
+
+      if (data.success) {
+        navigate("/cluster_album");
+      } else {
+        setError(data.message || "Invalid username or password");
+      }
+    } catch (error) {
+      setError("An error occurred during login");
+      console.error('Login error:', error);
     }
   };
 

@@ -8,7 +8,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/login" element={<Login />} />
-                <Route path="/recommendation" element={<Recommendation />} />
+                <Route path="/cluster_album" element={<Recommendation />} />
                 <Route path="*" element={<Login />} /> Default route
             </Routes>
         </Router>

@@ -6,13 +6,15 @@ from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import cosine_similarity
 
 
-def build_album_from_songs(input_song_indices, num_songs=10):
+def build_album_from_songs(input_song_indices, num_songs=10, exclude_input_songs=False, artist_filter='all'):
     """
     Build an album based on 3 input songs using clustering.
     
     Args:
         input_song_indices: List of 3 song indices from the dataset
         num_songs: Number of songs to include in the album (default: 10)
+        exclude_input_songs: Whether to exclude the input songs from the album (default: False)
+        artist_filter: Filter for artists in the album ('all', 'same', or 'different')
         
     Returns:
         List of song indices that form the album
@@ -78,10 +80,40 @@ def build_album_from_songs(input_song_indices, num_songs=10):
     most_similar_indices = np.argsort(cluster_similarities)[::-1][:num_songs]
     album_indices = [cluster_songs[idx] for idx in most_similar_indices]
     
-    # Ensure input songs are included in the album
-    for idx in input_song_indices:
-        if idx not in album_indices:
-            album_indices.append(idx)
+    # Apply artist filtering to the album songs
+    if artist_filter != 'all':
+        # Get the artists of the input songs
+        input_artists = set()
+        for idx in input_song_indices:
+            artist_name = df.iloc[idx]['artist_name'].lower()
+            input_artists.add(artist_name)
+        
+        # Filter album songs based on artist filter
+        filtered_album_indices = []
+        for idx in album_indices:
+            artist_name = df.iloc[idx]['artist_name'].lower()
+            
+            if artist_filter == 'same' and artist_name in input_artists:
+                filtered_album_indices.append(idx)
+            elif artist_filter == 'different' and artist_name not in input_artists:
+                filtered_album_indices.append(idx)
+        
+        # If we don't have enough songs after filtering, add more from the original list
+        if len(filtered_album_indices) < num_songs:
+            # Add songs from the original list that weren't filtered out
+            for idx in album_indices:
+                if idx not in filtered_album_indices:
+                    filtered_album_indices.append(idx)
+                    if len(filtered_album_indices) >= num_songs:
+                        break
+        
+        album_indices = filtered_album_indices[:num_songs]
+    
+    # Ensure input songs are included in the album (unless exclude_input_songs is True)
+    if not exclude_input_songs:
+        for idx in input_song_indices:
+            if idx not in album_indices:
+                album_indices.append(idx)
     
     return album_indices
 
