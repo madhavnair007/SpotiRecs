@@ -1,4 +1,6 @@
-import './Recommendation.css';import { useState } from 'react';
+import './Recommendation.css';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Recommendation() {
     const [isVisible, setIsVisible] = useState(false);
@@ -18,6 +20,9 @@ function Recommendation() {
         <div className="recommendation-container">
             <header>
                 <h1 className="mainHeading">Recommend a song!</h1>
+                <Link to="/album-builder" className="nav-link">
+                    Try Album Builder
+                </Link>
             </header>
 
             <div className="container">
